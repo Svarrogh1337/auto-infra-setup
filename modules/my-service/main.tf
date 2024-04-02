@@ -1,4 +1,20 @@
+resource "aws_security_group" "allow_rds_traffic" {
+  name        = "allow_http_traffic"
+  description = "Allow inbound http traffic"
+  vpc_id      = var.vpc_id
 
+  tags = {
+    Name = "allow_http_traffic"
+  }
+}
+
+resource "aws_vpc_security_group_ingress_rule" "allow_rds_traffic" {
+  security_group_id = aws_security_group.allow_rds_traffic.id
+  cidr_ipv4         = "0.0.0.0/0"
+  from_port         = 3306
+  ip_protocol       = "tcp"
+  to_port           = 3306
+}
 
 resource "aws_security_group" "allow_https_traffic" {
   name        = "allow_https_traffic"
@@ -134,4 +150,29 @@ resource "aws_lb_target_group_attachment" "app-node" {
   target_group_arn = aws_lb_target_group.app-lb1-tg1.arn
   target_id        = aws_instance.app-node[count.index].id
   port             = 80
+}
+
+resource "aws_db_subnet_group" "rds" {
+  name       = "rds"
+  subnet_ids = var.subnet_ids
+
+  tags = {
+    Name = "RDS subnet group"
+  }
+}
+
+resource "aws_db_instance" "app-rds1" {
+  engine                 = "mysql"
+  db_name                = "app1"
+  identifier             = "app1"
+  instance_class         = "db.t3.micro"
+  allocated_storage      = 20
+  username               = var.db-username
+  password               = var.db-password
+  vpc_security_group_ids = [aws_security_group.allow_rds_traffic.id]
+  skip_final_snapshot    = true
+  db_subnet_group_name   = aws_db_subnet_group.rds.name
+  tags = {
+    Name = "app-rds1"
+  }
 }

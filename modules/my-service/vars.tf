@@ -13,3 +13,11 @@ variable "ec2_count" {
   description = "ec2 instances to be used."
   type        =  number
 }
+
+variable "db-username" {
+  type = string
+  default = "mysql_user"
+}
+variable "db-password" {
+  type = string
+}
