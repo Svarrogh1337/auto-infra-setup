@@ -11,3 +11,7 @@ output "lb" {
 output "tg" {
   value     = aws_lb_target_group.app-lb1-tg1.arn_suffix
 }
+
+output "lb_dns" {
+  value = aws_lb.app-lb1.dns_name
+}

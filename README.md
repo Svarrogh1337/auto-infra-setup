@@ -63,12 +63,17 @@ git clone git@github.com:Svarrogh1337/auto-infra-setup.git
 cd auto-infra-setup
 terraform init --upgrade
 terraform validate
+terraform plan
 terraform apply -auto-approve
 ```
 
 ## Usage
 
-Your service is up and running. To retrrieve your SSH key for your instances:
+Your service is up and running. Your lb endpoint is:
+```
+terraform output -raw lb_dns
+```
+To get the SSH key used for your instances:
 ```
 terraform output -raw private_key > ~/.ssh/aws
 ```
