@@ -54,7 +54,11 @@ Lambda function(failover) is listening for events and triggers failover.py to re
 | Name | Description |
 |------|-------------|
 | <a name="output_private_key"></a> [private\_key](#output\_private\_key) | n/a |
-
+## Prerequisites
+AWS profile
+```
+aws configure
+```
 ## Installation
 
 ```
