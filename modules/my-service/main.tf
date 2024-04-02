@@ -1,10 +1,10 @@
 resource "aws_security_group" "allow_rds_traffic" {
-  name        = "allow_http_traffic"
+  name        = "allow_rds_traffic"
   description = "Allow inbound http traffic"
   vpc_id      = var.vpc_id
 
   tags = {
-    Name = "allow_http_traffic"
+    Name = "allow_rds_traffic"
   }
 }
 
